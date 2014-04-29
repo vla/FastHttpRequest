@@ -891,7 +891,7 @@ namespace HttpRequest
                 if (request != null)
                     request.Abort();
                 ProcessFailCallback(callback, exception);
-            } 
+            }
         }
 
         /// <summary>
@@ -1059,7 +1059,7 @@ namespace HttpRequest
                     request.Abort();
                 body.Close();
                 ProcessFailCallback(callback, exception);
-            } 
+            }
         }
 
         #endregion Request
@@ -1089,11 +1089,12 @@ namespace HttpRequest
         /// <param name="callback"></param>
         private static void ProcessCallback(IAsyncResult callbackResult, Action<HttpResult> callback) {
             HttpWebRequest myRequest = (HttpWebRequest)callbackResult.AsyncState;
-            HttpResult result = new HttpResult();
+
             HttpWebResponse response = null;
             try {
                 response = (HttpWebResponse)myRequest.EndGetResponse(callbackResult);
                 if (callback != null) {
+                    HttpResult result = new HttpResult();
                     result.StatusCode = response.StatusCode;
                     result.StatusDescription = response.StatusDescription;
                     result.Header = response.Headers;
@@ -1116,8 +1117,9 @@ namespace HttpRequest
                     if (response.Headers["set-cookie"] != null) result.Cookie = response.Headers["set-cookie"];
 
                     result.IsCompleted = true;
-
                     callback(result);
+                } else {
+                    response.Close();
                 }
             } catch (WebException exception) {
                 if (response != null)
