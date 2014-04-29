@@ -60,7 +60,8 @@ namespace ConsoleTest
 
             lrTag("head_test  task", "=", 10);
 
-            var task = HttpHelper.HeadTask(url).ContinueWith(x => {
+            var task = HttpHelper.HeadTask(url).ContinueWith(x =>
+            {
 
                 if (x.IsFaulted || x.Exception != null) {
                     var agg = x.Exception as AggregateException;
@@ -69,7 +70,7 @@ namespace ConsoleTest
                     }
                 }
             });
-          
+
         }
 
         private void head_test() {
@@ -88,9 +89,15 @@ namespace ConsoleTest
             var file = AppDomain.CurrentDomain.BaseDirectory + "/hello2.txt";
             File.WriteAllText(file, "hellp upload.上传内容.");
 
-            var result = HttpHelper.Upload(url, new[] { new HttpHelper.NamedFileStream("t1", "hello2.txt", File.OpenRead(file)) }, parameters
-                ,method: HttpHelper.HttpVerb.Post);
-            Console.WriteLine(result.ToStingResult());
+            HttpHelper.UploadTask(
+                url,
+                new[] { new HttpHelper.NamedFileStream("t1", "hello2.txt", File.OpenRead(file)) },
+                parameters,
+                method: HttpHelper.HttpVerb.Post)
+                .ContinueWith(x =>
+                {
+                    Console.WriteLine(x.Result.ToStingResult());
+                });
         }
 
         private void body_test() {
