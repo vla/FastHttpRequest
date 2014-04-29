@@ -15,5 +15,5 @@ $RECYCLE.BIN/
 *Bin/
 *obj/
 *Obj/
-packages/
-WebSite/tmp/
+src/packages/
+src/WebSite/tmp/
