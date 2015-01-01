@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>FastHttpRequest</id>
+    <version>0.0.0</version>
+    <title>Fast HttpRequest</title>
+    <authors>v.la@Live.cn</authors>
+    <owners>JohnVVu</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>C# HttpRequest Helper</description>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <tags>Http HttpHelper HttpRequest</tags>
+    <language>en-US</language>
+  </metadata>
+  <files>
+    <file src="artifacts\bin\HttpRequest.dll" target="lib\net40" />
+  </files>
+</package>
