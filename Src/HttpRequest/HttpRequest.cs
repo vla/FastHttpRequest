@@ -932,7 +932,7 @@ namespace HttpRequest
                     }
                     builder.Append(pair.ToString());
                     builder.Append('=');
-                    builder.Append(Uri.EscapeDataString(dic[pair].ToString()));
+                    builder.Append(UrlEncode(dic[pair].ToString()));
                 }
             } else if (type != typeof(string)) {
                 var properties = type.GetProperties();
@@ -945,7 +945,7 @@ namespace HttpRequest
                     if (val == null) {
                         continue;
                     }
-                    builder.Append(prop.Name + "=" + Uri.EscapeDataString(val.ToString()));
+                    builder.Append(prop.Name + "=" + UrlEncode(val.ToString()));
                 }
             } else if (type == typeof(string)) {
                 return parameters.ToString();
@@ -965,6 +965,33 @@ namespace HttpRequest
             }
 
             return new string(chars);
+        }
+
+         /// <summary>
+        /// Uri编码
+        /// </summary>
+        /// <param name="stringToEscape"></param>
+        /// <returns></returns>
+        private static string UrlEncode(string stringToEscape) {
+            //继续使用微软提供的Uri.EscapeDataString作为Uri编码
+            //分隔处理解决长度限制
+            const int maxLength = 32766;
+            if (stringToEscape == null)
+                return null;
+
+            if (stringToEscape.Length <= maxLength)
+                return Uri.EscapeDataString(stringToEscape);
+
+            StringBuilder sb = new StringBuilder(stringToEscape.Length * 2);
+            int index = 0;
+            while (index < stringToEscape.Length) {
+                int length = Math.Min(stringToEscape.Length - index, maxLength);
+                string subString = stringToEscape.Substring(index, length);
+                sb.Append(Uri.EscapeDataString(subString));
+                index += subString.Length;
+            }
+
+            return sb.ToString();
         }
 
         #endregion Helper
