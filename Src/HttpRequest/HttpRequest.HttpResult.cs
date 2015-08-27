@@ -51,7 +51,7 @@ namespace HttpRequest
         /// </summary>
         /// <param name="result">HttpResult</param>
         /// <returns>string</returns>
-        public static string ToStingResult(this HttpHelper.HttpResult result) {
+        public static string ToStringResult(this HttpHelper.HttpResult result) {
             string encodingName = HttpHelper.GetEncodingFromHeaders(result.Header);
 
             Encoding encoding;

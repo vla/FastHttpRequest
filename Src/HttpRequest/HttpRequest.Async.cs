@@ -1078,7 +1078,7 @@ namespace HttpRequest
         private static Action<HttpResult> StreamToStringCallback(Action<string> callback) {
             return (HttpResult result) =>
             {
-                callback(result.ToStingResult());
+                callback(result.ToStringResult());
             };
         }
 

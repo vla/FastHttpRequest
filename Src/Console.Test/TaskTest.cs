@@ -96,7 +96,7 @@ namespace ConsoleTest
                 method: HttpHelper.HttpVerb.Post)
                 .ContinueWith(x =>
                 {
-                    Console.WriteLine(x.Result.ToStingResult());
+                    Console.WriteLine(x.Result.ToStringResult());
                 });
         }
 
@@ -107,7 +107,7 @@ namespace ConsoleTest
             HttpHelper.BodyTask(url, new MemoryStream(Encoding.UTF8.GetBytes(json)), HttpHelper.HttpVerb.Post).ContinueWith(x =>
             {
 
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             }); ;
         }
 
@@ -119,7 +119,7 @@ namespace ConsoleTest
             HttpHelper.PatchTask(url, new { name = "Johnwu", age = 123 }).ContinueWith(x =>
             {
 
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             });
         }
 
@@ -130,7 +130,7 @@ namespace ConsoleTest
 
             HttpHelper.DeleteTask(url, new { name = "Johnwu", age = 123 }).ContinueWith(x =>
             {
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             });
         }
 
@@ -142,7 +142,7 @@ namespace ConsoleTest
             HttpHelper.PutTask(url, new { name = "Johnwu", age = 123 }).ContinueWith(x =>
             {
 
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             });
         }
 
@@ -154,7 +154,7 @@ namespace ConsoleTest
             HttpHelper.PostTask(url, new { name = "Johnwu", age = 123 }).ContinueWith(x =>
             {
 
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             });
         }
 
@@ -166,12 +166,12 @@ namespace ConsoleTest
 
             HttpHelper.GetTask(url).ContinueWith(x =>
             {
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             });
 
             HttpHelper.GetTask(url, new { name = "Johnwu", age = 123 }).ContinueWith(x =>
             {
-                Console.WriteLine(x.Result.ToStingResult());
+                Console.WriteLine(x.Result.ToStringResult());
             });
 
         }

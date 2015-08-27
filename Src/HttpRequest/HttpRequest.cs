@@ -69,7 +69,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string GetString(string url, string contentType = "", WebHeaderCollection header = null) {
-            return _Rq(url, HttpVerb.Get, contentType, header).ToStingResult();
+            return _Rq(url, HttpVerb.Get, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string GetString(string url, object parameters, string contentType = "", WebHeaderCollection header = null) {
-            return _Rq(url, parameters, HttpVerb.Get, contentType, header).ToStingResult();
+            return _Rq(url, parameters, HttpVerb.Get, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string PostToString(string url, object parameters, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, parameters, HttpVerb.Post, contentType, header).ToStingResult();
+            return _Rq(url, parameters, HttpVerb.Post, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string PutToString(string url, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, HttpVerb.Put, contentType, header).ToStingResult();
+            return _Rq(url, HttpVerb.Put, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string PutToString(string url, object parameters, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, parameters, HttpVerb.Put, contentType, header).ToStingResult();
+            return _Rq(url, parameters, HttpVerb.Put, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string DeleteToString(string url, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, HttpVerb.Delete, contentType, header).ToStingResult();
+            return _Rq(url, HttpVerb.Delete, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string DeleteToString(string url, object parameters, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, parameters, HttpVerb.Delete, contentType, header).ToStingResult();
+            return _Rq(url, parameters, HttpVerb.Delete, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string PatchToString(string url, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, HttpVerb.Patch, contentType, header).ToStingResult();
+            return _Rq(url, HttpVerb.Patch, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace HttpRequest
         /// <param name="header">WebHeaderCollection</param>
         /// <returns>return string</returns>
         public static string PatchToString(string url, object parameters, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
-            return _Rq(url, parameters, HttpVerb.Patch, contentType, header).ToStingResult();
+            return _Rq(url, parameters, HttpVerb.Patch, contentType, header).ToStringResult();
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace HttpRequest
         public static string BodyToString(string url, Stream body, HttpVerb method = HttpVerb.Get, string contentType = "text/json", WebHeaderCollection header = null) {
             var result = Request(new HttpParam { URL = url, Method = method, ContentType = contentType, Header = header }, body);
 
-            return result.ToStingResult();
+            return result.ToStringResult();
         }
 
         #endregion Body
@@ -505,7 +505,7 @@ namespace HttpRequest
         public static string UploadToString(string url, NamedFileStream[] files, object parameters = null, HttpVerb method = HttpVerb.Post, string contentType = "application/x-www-form-urlencoded", WebHeaderCollection header = null) {
             var result = Request(new HttpParam { URL = url, Parameters = parameters, Method = method, ContentType = contentType, Header = header }, files);
 
-            return result.ToStingResult();
+            return result.ToStringResult();
         }
 
         #endregion Upload
