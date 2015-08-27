@@ -18,3 +18,4 @@ $RECYCLE.BIN/
 artifacts/
 src/packages/
 src/WebSite/tmp/
+src/.vs/
