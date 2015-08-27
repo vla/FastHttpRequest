@@ -1,6 +1,6 @@
 ﻿properties {
 
-  $base_version = "1.0.1" 
+  $base_version = "1.0.2" 
   $base_dir = Split-Path $psake.build_script_file 
 
   $tools_dir = "$base_dir\tools"

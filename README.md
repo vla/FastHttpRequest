@@ -76,18 +76,18 @@ Task Invoker
 //post
 HttpHelper.PostTask(url, new { name = "Johnwu", age = 30 }).ContinueWith(x =>
 {
-    Console.WriteLine(x.Result.ToStingResult());
+    Console.WriteLine(x.Result.ToStringResult());
 });
 
 //get
 HttpHelper.GetTask(url).ContinueWith(x =>
 {
-    Console.WriteLine(x.Result.ToStingResult());
+    Console.WriteLine(x.Result.ToStringResult());
 });
 
 HttpHelper.GetTask(url, new { name = "Johnwu", age = 30 }).ContinueWith(x =>
 {
-    Console.WriteLine(x.Result.ToStingResult());
+    Console.WriteLine(x.Result.ToStringResult());
 });
 
 //upload
@@ -102,7 +102,7 @@ parameters,
 method: HttpHelper.HttpVerb.Post)
 .ContinueWith(x =>
 {
-    Console.WriteLine(x.Result.ToStingResult());
+    Console.WriteLine(x.Result.ToStringResult());
 });
 
 ```
