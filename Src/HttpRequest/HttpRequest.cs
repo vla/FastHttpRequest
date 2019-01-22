@@ -842,8 +842,8 @@ namespace HttpRequest
             //来源地址
             if (!string.IsNullOrEmpty(httpParam.Referer))
                 request.Referer = httpParam.Referer;
-
-            request.AllowAutoRedirect = false;
+      
+            request.AllowAutoRedirect = httpParam.AllowAutoRedirect;
             request.KeepAlive = false;
             //浏览器支持的语言分别是中文和简体中文，优先支持简体中文。
             request.Headers.Add("Accept-Language", "zh-CN");

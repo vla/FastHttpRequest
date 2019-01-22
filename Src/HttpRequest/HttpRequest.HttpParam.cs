@@ -55,6 +55,7 @@ namespace HttpRequest
             private HttpVerb _httpVerb = HttpVerb.Get;
             private string _accpet;
             private string  _userAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.22 Safari/537.36";
+            private bool _allowAutoRedirect = true;
 
             /// <summary>
             /// 请求URL
@@ -118,6 +119,14 @@ namespace HttpRequest
             public string UserAgent {
                 get { return _userAgent; }
                 set { _userAgent = value; }
+            }
+
+            /// <summary>
+            /// 获取或设置一个值，该值指示请求是否应跟随重定向响应。
+            /// </summary>
+            public bool AllowAutoRedirect {
+                get { return _allowAutoRedirect; }
+                set { _allowAutoRedirect = value; }
             }
 
             /// <summary>
