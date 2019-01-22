@@ -17,12 +17,7 @@ namespace ConsoleTest
         public override void Execute()
         {
             string url = "https://docs.microsoft.com/aspnet";
-            var res = HttpHelper.Request(new HttpHelper.HttpParam()
-            {
-                Method = HttpHelper.HttpVerb.Get,
-                AllowAutoRedirect = true
-            }).ToStringResult();
-
+            var res = HttpHelper.GetString(url);
             Console.WriteLine("Result " + res);
         }
 
