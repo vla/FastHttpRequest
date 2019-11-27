@@ -805,71 +805,80 @@ namespace HttpRequest
             HttpWebRequest request = null;
 
             //设置分界线
-            string boundary = RandomString(12);
+            var boundary = "---------------" + RandomString(32);
+            var beginBoundary = Encoding.ASCII.GetBytes("--" + boundary + "\r\n");
+            var endBoundary = Encoding.ASCII.GetBytes("--" + boundary + "--\r\n");
+            var newLineBytes = Encoding.ASCII.GetBytes("\r\n");
+
+            const string filePartHeader ="Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
+                "Content-Type: application/octet-stream\r\n\r\n";
+
+            var stringKeyHeader = "\r\n--" + boundary +
+                                   "\r\nContent-Disposition: form-data; name=\"{0}\"" +
+                                   "\r\n\r\n{1}\r\n";
 
             try {
                 request = (HttpWebRequest)HttpWebRequest.Create(new Uri(httpParam.URL));
 
                 SetRequest(request, httpParam);
 
-                request.ContentType = "multipart/form-data; boundary=" + boundary;
+                request.ContentType = string.Format("multipart/form-data; boundary={0}", boundary);
 
                 //开始异步请求
                 request.BeginGetRequestStream(new AsyncCallback((callbackResult) =>
                 {
                     HttpWebRequest _request = (HttpWebRequest)callbackResult.AsyncState;
 
-                    var requestStream = _request.EndGetRequestStream(callbackResult);
+                    using (var stream = _request.EndGetRequestStream(callbackResult))
+                    {
+                        try
+                        {
 
-                    //转化网络流对象进行直接射入，省内存
-                    using (StreamWriter writer = new StreamWriter(requestStream, encoding)) {
-                        try {
+                            //处理文件
+                            foreach (var file in files)
+                            {
+                                stream.Write(beginBoundary, 0, beginBoundary.Length);
+                                var headerBytes = Encoding.UTF8.GetBytes(string.Format(filePartHeader, file.Name, file.FileName));
+                                stream.Write(headerBytes, 0, headerBytes.Length);
+
+                                //复制文件流到Body
+                                CopyStream(file.Stream, stream);
+
+                                stream.Write(newLineBytes, 0, newLineBytes.Length);
+                            }
+
                             IDictionary postbody = SerializeQuery(httpParam.Parameters);
 
-                            string newLine = "\r\n";
-
-                            //处理form-data
-                            if (postbody != null) {
-                                foreach (string key in postbody.Keys) {
-                                    if (postbody[key] != null) {
-                                        writer.Write("--" + boundary + newLine);
-                                        writer.Write("Content-Disposition: form-data; name=\"{0}\"{1}{1}", key, newLine);
-                                        writer.Write(postbody[key] + newLine);
-                                        writer.Flush();
+                            //处理form - data
+                            if (postbody != null)
+                            {
+                                foreach (string key in postbody.Keys)
+                                {
+                                    if (postbody[key] != null)
+                                    {
+                                        var headerBytes = Encoding.UTF8.GetBytes(string.Format(stringKeyHeader, key, postbody[key]));
+                                        stream.Write(headerBytes, 0, headerBytes.Length);
                                     }
                                 }
                             }
 
-                            //处理文件流
-                            foreach (var file in files) {
-                                writer.Write("--" + boundary + newLine);
-                                writer.Write(
-                                    "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"{2}",
-                                    file.Name,
-                                    file.FileName,
-                                    newLine
-                                    );
-                                writer.Write("Content-Type: application/octet-stream" + newLine + newLine);
-                                writer.Flush();
-
-                                //复制文件流到Body
-                                CopyStream(file.Stream, requestStream);
-
-                                writer.Write(newLine);
-                                writer.Write("--" + boundary + newLine);
-                                writer.Flush();
-                            }
-                        } catch (Exception ex) {
-                            requestStream.Dispose();
+                            stream.Write(endBoundary, 0, endBoundary.Length);
+                        }
+                        catch (Exception ex)
+                        {
+                            stream.Dispose();
                             ProcessFailCallback(callback, ex);
                             return;
-                        } finally {
+                        }
+                        finally
+                        {
                             //使用完后释放
                             foreach (var file in files)
                                 if (file.Stream != null)
                                     file.Stream.Dispose();
                         }
                     }
+                    
 
                     //异步接收响应，并且设置一个超时时间
                     IAsyncResult asyncResult = _request.BeginGetResponse(null, _request);
